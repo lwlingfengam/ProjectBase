@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>techfirst detail frame</title>
+    <!--  一期工艺 -->
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/glyphicons.css" />
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body class="flex-box-v">
+<div id="app">
+    <div class="list-block">
+        <div class="line-dotted"></div>
+        <div class="list-block-main">
+            <div class="row">
+                <div class="flex-1 text-left">采集时间:</div>
+                <div class="flex-1 text-right datetime">2019-03-18</div>
+            </div>
+            <div v-for="item in data">
+                <div class="line-dotted"></div>
+                <span class="title"@click="item.active=!item.active">{{item.tittle}}
+            </span>
+                <img class="icon pull-right up-down" :src="item.active? '../image/arrow_up.png':'../image/arrow_down.png'" alt=""></img>
+                <div class="list-block-main" v-show="item.active" >
+                <div class="row">
+                    <div class="flex-1 text-left">{{item.tittle}}参数1</div>
+                    <div class="flex-1 text-right"><em>5.6</em>m</div>
+                </div>
+                <div class="row">
+                    <div class="flex-1 text-left">{{item.tittle}}参数2</div>
+                    <div class="flex-1 text-right"><em>3.3</em>m³</div>
+                </div>
+                <div class="row">
+                    <div class="flex-1 text-left">{{item.tittle}}参数3</div>
+                    <div class="flex-1 text-right"><em>1.34</em>mg/L</div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+<script type="text/javascript" src="../script/lib/vue.min.js"></script>
+<script type="text/javascript">
+var searchBar = null;
+apiready = function() {
+    var UISearchBar = api.require('UISearchBar');
+    searchBar = new LDSearchBar(UISearchBar, '输入关键字名称查询', function(ret) {
+        alert(JSON.stringify(ret));
+    });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            data: [{
+                active: false,
+                tittle: "配水井",
+            }, {
+                active: false,
+                tittle: "厌氧池"
+            }, {
+                active: false,
+                tittle: "缺氧池"
+            }, {
+                active: false,
+                tittle: "好氧池"
+            }, {
+                active: false,
+                tittle: "沉淀池"
+            }, {
+                active: false,
+                tittle: "滤池"
+            }, {
+                active: false,
+                tittle: "风机"
+            }, {
+                active: false,
+                tittle: "液位计"
+            }]
+
+        },
+        mounted: function() {
+
+        },
+        methods: {
+
+        }
+    })
+
+};
+</script>
+
+</html>

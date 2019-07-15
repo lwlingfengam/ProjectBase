@@ -1,0 +1,571 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>视频播放</title>
+    <style>
+        .footer {
+            display: none;
+            position: relative;
+            top: 190px;
+            left: -10px;
+            background: white;
+            height: 30px;
+            width: 100vh;
+            z-index: 99999999;
+            border: 1px solid rgb(220, 223, 226)
+        }
+
+        .opeateAreay {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .opeateAreay img {
+            width: 20px;
+            height: 20px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="footer">
+        <div class="opeateAreay">
+            <img id="opeatePlay" src="../img/video/small/play.png" title="播放" alt="播放" />
+            <img id="opeatePause" src="../img/video/small/pause.png" title="暂停" alt="暂停" />
+            <img id="opeateMute" src="../img/video/small/mute.png" title="静音" alt="静音" />
+            <img id="opeateScreenshot" src="../img/video/small/screenshot.png" title="截屏" alt="截屏" />
+            <img id="opeateFullScreen" src="../img/video/small/fullscreen.png" title="全屏" alt="全屏" />
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    var alivcLivePlayer, connectionType, timer, pageParam, uiButton, uiButtonArray, uiButtonIdArray, isMute, uiLoading, fsOp
+    var isFullscreen = false
+    var loadingLabel
+    apiready = function () {
+        uiButton = api.require('UIButton')
+        uiLoading = api.require('UILoading')
+        loadingLabel = api.require('loadingLabel')
+        fsOp = api.require('fs')
+        uiButtonIdArray = []
+        isMute = false
+        uiButtonArray = [
+            {
+                title: '播放',
+                src: '../img/video/full/play.png'
+            },
+            {
+                title: '暂停',
+                src: '../img/video/full/pause.png'
+            },
+            {
+                title: '静音',
+                src: '../img/video/full/mute.png'
+            },
+            {
+                title: '截屏',
+                src: '../img/video/full/screenshot.png'
+            },
+            {
+                title: '退出全屏',
+                src: '../img/video/full/exit-fullscreen.png'
+            }
+        ]
+        pageParam = getPageParamData()
+        alivcLivePlayer = api.require('alivcLivePlayer')
+        connectionType = api.connectionType
+
+        initPlayer()
+
+        // 监听网络变化
+        api.addEventListener({
+            name: 'online'
+        }, function (ret, err) {
+            connectionType = api.connectionType;
+            if (ret.connectionType !== 'wifi') {
+                pausePlay()
+                api.confirm({
+                    title: '检测到您的网络发生了变化',
+                    msg: '您正处于移动网络状态，要继续播放吗？',
+                    buttons: ['取消', '确定']
+                }, function (ret, err) {
+                    if (ret.buttonIndex == 2) {
+                        play()
+                    }
+                });
+            }
+        });
+
+        document.getElementById("opeatePlay").addEventListener('click', function () {
+            startPlay()
+        })
+
+        document.getElementById("opeatePause").addEventListener('click', function () {
+            pausePlay()
+        })
+
+        document.getElementById("opeateMute").addEventListener('click', function () {
+            setMuteModePlay()
+        })
+
+        document.getElementById("opeateScreenshot").addEventListener('click', function () {
+            snapShotPlay()
+        })
+
+        document.getElementById("opeateFullScreen").addEventListener('click', function () {
+            fullScreen(true)
+        })
+
+        createSnapShotDir()
+        // var top=190
+
+    }
+
+    // 获取请求参数
+    function getPageParamData() {
+        var pageParam = {}
+        var data = api.pageParam.data
+        pageParam.url = data.url  //视频地址
+        pageParam.frameName = data.frameName //显示视频的frame名称
+        pageParam.auto = data.auto || true //是否自动播放，默认是
+        pageParam.rectFrame = data.rectFrame //frame的位置
+        if (!pageParam.rectPlayer) {
+            pageParam.rectPlayer = {
+                x: 0, // （可选项）数字类型；模块左上角的 x 坐标（相对于所属的 Window 或 Frame）；默认值：0
+                y: 0, // （可选项）数字类型；模块左上角的 y 坐标（相对于所属的 Window 或 Frame）；默认值：0
+                w: api.frameWidth, // (可选项)数字类型;模块宽度（相对于所属的 Window 或 Frame;默认300
+                h: pageParam.rectFrame.h-30 // (可选项)数字类型;模块高度（相对于所属的 Window 或 Frame;默认300
+            }
+        }
+        return pageParam
+    }
+
+    function showFooter()
+    {
+        var footer = document.querySelector('.footer')
+        footer.style.top = pageParam.rectPlayer.h-10 + 'px'
+        footer.style.width=  pageParam.rectPlayer.w+'px'
+        footer.style.display="block"
+    }
+
+    // 初始化播放器
+    function initPlayer() {
+        var params = {
+            rect: pageParam.rectPlayer,
+            fixedOn: pageParam.frameName,
+            fixed: false
+        }
+        alivcLivePlayer.initPlayer(params, function (ret) {
+            if (api.systemType === 'android') {
+                if (ret.status) {
+                    showFooter()
+                    showLoading()
+                    readyPlayer()
+                    playEvent()
+                }
+                else {
+                    console.log('安卓播放器初始失败', JSON.stringify(ret))
+                }
+            }
+        })
+
+        if (api.systemType === 'ios') {
+            setTimeout(function () {
+                readyPlayer()
+                playEvent()
+            }, 300)
+        }
+    }
+
+    // 准备播放
+    function readyPlayer() {
+        if (api.systemType === 'ios') {
+            alivcLivePlayer.prepareToPlay({
+                url: pageParam.url
+            },
+                function (ret) {
+                    if (ret.status && pageParam.auto) {
+                        startPlay()
+                    } else {
+                        console.log('IOS预览失败', JSON.stringify(ret))
+                    }
+                }
+            )
+        }
+        else {
+            alivcLivePlayer.prepareAndPlay(
+                {
+                    url: pageParam.url
+                },
+                function (ret) {
+                    if (ret.status && pageParam.auto) {
+                        startPlay()
+                    } else {
+                        console.log('安卓预览失败', JSON.stringify(ret))
+                    }
+                })
+        }
+    }
+
+    // 开始播放
+    function startPlay() {
+        // 判断网络
+        if (connectionType === 'wifi') {
+            play()
+        } else {
+
+            if (connectionType === 'none') {
+                api.alert({ title: '请检查您的网络链接' });
+                return false;
+            }
+
+            api.confirm({
+                title: '要继续播放吗？',
+                msg: '您正处于移动网络状态，请注意流量消耗',
+                buttons: ['取消', '确定']
+            }, function (ret, err) {
+                if (ret.buttonIndex == 2) {
+                    play()
+                }
+            });
+        }
+    }
+    // 开始播放
+    function play() {
+        alivcLivePlayer.play();
+        // 设置不允许息屏
+        api.setKeepScreenOn({ keepOn: true });
+    }
+
+    // 暂停播放
+    function pausePlay() {
+        alivcLivePlayer.pause();
+    }
+
+    // 停止播放
+    function stopPlay() {
+        alivcLivePlayer.stop();
+    }
+
+    // 销毁播放
+    function destroyPlay() {
+        alivcLivePlayer.destroy();
+    }
+
+    // 截屏
+    function snapShotPlay() {
+        var filePath = 'fs://myvideo/' + Math.random() + '.jpg'
+        alivcLivePlayer.snapShot({
+            path: filePath
+        }, function (ret) {
+        })
+        alert("截图成功,截屏存放在myvideo文件夹下")
+    }
+
+    function createSnapShotDir() {
+        var ret = fsOp.createDirSync({
+            path: 'fs://myvideo'
+        });
+    }
+
+    //设置静音
+    function setMuteModePlay() {
+        isMute = !isMute
+        alivcLivePlayer.setMuteMode({
+            isMute: isMute
+        });
+        var opeateMute = document.getElementById("opeateMute")
+        var imgSrc = ''
+        var alt = ''
+        if (!isMute) {
+            imgSrc = '../img/video/small/mute.png'
+            alt = '静音'
+        }
+        else {
+            imgSrc = '../img/video/small/sound.png'
+            alt = '声音'
+        }
+        opeateMute.setAttribute("src", imgSrc)
+        opeateMute.setAttribute("alt", alt)
+        opeateMute.setAttribute("title", alt)
+    }
+
+    // 全屏显示
+    function fullScreen(isFull) {
+        var rectByfullScreen = {
+            x: 0,
+            y: 0,
+            w: api.winWidth,
+            h: api.winHeight
+        }
+        var rect = isFull ? rectByfullScreen : pageParam.rectPlayer
+        if (isFull) {
+            isFullscreen = true
+            $api.setStorage("frameNameForFullScreen", pageParam.frameName)
+            api.setFrameAttr({
+                name: pageParam.frameName,
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight
+                }
+            });
+            alivcLivePlayer.setRenderRotate({
+                rotate: 90
+            })
+            alivcLivePlayer.resize({
+                rect: rect
+            })
+            closeButtonArea()
+            api.removeEventListener({
+                name: 'tap'
+            })
+            if (timer) {
+                clearTimeout(timer)
+            }
+            api.addEventListener({
+                name: 'tap'
+            }, function (ret, err) {
+                openButtonArea()
+                if (timer) {
+                    clearTimeout(timer)
+                }
+                timer = setTimeout(function () {
+                    closeButtonArea()
+                }, 6000)
+            });
+        }
+        else {
+            isFullscreen = true
+            api.removeEventListener({
+                name: 'tap'
+            })
+            if (timer) {
+                clearTimeout(timer)
+            }
+            closeButtonArea()
+            $api.rmStorage("frameNameForFullScreen")
+            alivcLivePlayer.setRenderRotate({
+                rotate: 0
+            })
+            alivcLivePlayer.resize({
+                rect: rect
+            })
+            api.setFrameAttr({
+                name: pageParam.frameName,
+                rect: pageParam.rectFrame
+            })
+        }
+
+        // if (isFull) {
+        //     api.openWin({
+        //         name: 'win_APlayerFullScreen',
+        //         url: './win_APlayerFullScreen.html',
+        //         pageParam: {
+        //             data:{
+        //                 player: alivcLivePlayer,
+        //                 frameName: pageParam.frameName
+        //             }
+        //         }
+        //     });
+        // }
+        // else {
+        //     api.closeWin({
+        //         name: 'win_APlayerFullScreen'
+        //     });
+        //     alivcLivePlayer.setRenderRotate({
+        //         rotate: 0
+        //     })
+        //     $api.rmStorage("frameNameForFullScreen")
+        //     alivcLivePlayer.resize({
+        //         rect: pageParam.rect
+        //     })
+        // }
+    }
+    // 全屏模式下显示操作按钮
+    function openButtonArea() {
+        if (uiButtonIdArray.length > 0) {
+            return;
+        }
+        addBottomImg()
+        var uiButtonParam = {
+            rect: {
+                x: 10,
+                y: 0,
+                w: 28,
+                h: 28
+            },
+            corner: 5,
+            bg: {
+                normal: ''
+            },
+            fixedOn: pageParam.frameName,
+            fixed: true,
+            move: false
+        }
+        uiButtonArray.forEach(function (item, index) {
+            var baseY = api.winHeight - 224
+            uiButtonParam.rect.y = baseY + index * 45
+            uiButtonParam.bg.normal = item.src
+            uiButton.open(uiButtonParam, function (ret, err) {
+                if (ret.eventType == 'show') {
+                    uiButtonIdArray.push(ret.id)
+                }
+                else if (ret.eventType == 'click') {
+                    if (item.title == '播放') {
+                        startPlay()
+                    }
+                    else if (item.title == '暂停') {
+                        pausePlay()
+                    }
+                    else if (item.title == '静音') {
+                        setMuteModePlay()
+                    }
+                    else if (item.title == '截屏') {
+                        snapShotPlay()
+                    }
+                    else if (item.title == '退出全屏') {
+                        fullScreen(false)
+                    }
+                }
+            })
+        })
+    }
+
+    function addBottomImg() {
+        var uiButtonParam = {
+            rect: {
+                x: 0,
+                y: api.winHeight - 240,
+                w: 50,
+                h: 240
+            },
+            corner: 5,
+            bg: {
+                normal: '../img/video/full/bottom.jpg'
+            },
+            fixedOn: pageParam.frameName,
+            fixed: true,
+            move: false
+        }
+        uiButton.open(uiButtonParam, function (ret, err) {
+            if (ret.eventType == 'show') {
+                uiButtonIdArray.push(ret.id)
+            }
+        })
+    }
+
+    // 全屏模式下关闭操作按钮
+    function closeButtonArea() {
+        uiButtonIdArray.forEach(function (item, index) {
+            uiButton.close({
+                id: item
+            })
+        })
+        uiButtonIdArray = []
+    }
+
+    var loadinUiButtonId = null
+    var loadingTimer;
+    function showLoading() {
+        loadinUiButtonId = null
+        var x = api.frameWidth / 2 - 70
+        var y = api.frameHeight / 2 - 60
+        // var uiButtonParam = {
+        //     rect: {
+        //         x: x,
+        //         y: y,
+        //         w: 150,
+        //         h: 100
+        //     },
+        //     corner: 5,
+        //     bg: {
+        //         normal: 'widget:/img/video/small/loading.gif'
+        //     },
+        //     fixedOn: pageParam.frameName,
+        //     fixed: true,
+        //     move: false
+        // }
+        // uiButton.open(uiButtonParam, function (ret, err) {
+        //     if (ret.eventType == 'show') {
+        //         loadinUiButtonId = ret.id
+        //     }
+        // })
+        //     var x = api.frameWidth / 2
+        //     var y =  api.frameHeight / 2
+        //     uiLoading.flower({
+        //         center:{
+        //             x: x,
+        //             y: y
+        //         },
+        //         size: 20,
+        //         mask:'rgb(14, 48, 122)',
+        //         fixedOn: pageParam.frameName,
+        //         fixed: true
+        //     }, function(ret) {
+        //         loadinUiButtonId=ret.id
+        //   });
+        var x = api.frameWidth / 2
+        var y = api.frameHeight / 2 - 50
+        var parmas = {
+            centerX: x,
+            centerY: y,
+            w: 150,
+            h: 100,
+            fixedOn: pageParam.frameName,
+            fixed: true,
+            //gifPath: 'widget:/img/video/small/loading.gif'
+        }
+        var loadingLabel = api.require('loadingLabel')
+        loadingLabel.open(parmas, function (ret, err) {
+            if (ret) {
+                if (ret.id) {
+                    loadinUiButtonId = ret.id
+                }
+            } else {
+            }
+        })
+    }
+
+    function hideLoading() {
+        if (loadinUiButtonId !== null) {
+            // uiLoading.closeFlower({
+            //        id: loadinUiButtonId
+            // });
+            // uiButton.close({
+            //     id: loadinUiButtonId
+            // })
+            loadingLabel.close({
+                id: loadinUiButtonId
+            });
+            loadinUiButtonId = null
+        }
+    }
+
+    // 视频监听
+    function playEvent() {
+        alivcLivePlayer.addEventListener(function (ret) {
+            switch (ret.eventType) {
+                // case 'prepared':
+                case 'frameInfoListener':
+                    hideLoading()
+                    break;
+            }
+        });
+
+        // alivcLivePlayer.setOnErrorListener(function (ret) {
+        //     alert('播放视频异常:' + JSON.stringify(ret));
+        // });
+    }
+</script>

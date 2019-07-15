@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- viewport设置，屏幕渲染布局方式 -->
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>waterquain list frame</title>
+<!--  进水水质列表页面
+      查询/筛选组织结构/水厂进水水质列表
+-->
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/glyphicons.css" />
+    <style type="text/css">
+    .btnpull-right {
+    background-color: #ffffff; /* Green */
+    border: none;
+    color: green;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    /*margin: 4px 2px;*/
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    float:right;
+    border-radius: 12px;
+    border: 1px solid #4CAF50;
+},
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+<!-- 搜索 -->
+<body class="flex-box-v">
+    <div id="search" tapmode onclick="openSearchWindow();">
+        <div class="search-warp">
+            <input id="inputSearch" type="text" placeholder="输入关键字名称查找水厂" readonly="readonly">
+        </div>
+    </div>
+<!-- 组织结构筛选 -->
+    <div id="filter">
+        <div class="filter-warp">
+            <div class="filter-item" tapmode onclick="openUnitActionSheet();">
+                <!-- <span id="unit"></span><span class="glyphicon glyphicon-triangle-bottom"></span> -->
+                <span>白沙湾污水一厂</span><span class="glyphicon glyphicon-triangle-bottom"></span>
+
+            </div>
+            <div class="filter-item"></div>
+            <div class="filter-item"></div>
+        </div>
+    </div>
+
+<!-- 页面 -->
+    <!-- <div id="main">
+    </div> -->
+
+<!-- 虚假页面 -->
+<div class="list-block" tapmode="highlight" onclick="openGroupFrames();">
+    <div class="list-block-header clearfix">
+        <span class="title">
+            <img class="icon" src="../image/home/nav/shape_shuiku.png" alt="">白沙湾污水一厂-进水口
+        </span>
+
+            <span class="label label-danger pull-right">不达标</span>
+
+    </div>
+<div class="list-block-main">
+  <div class="row">
+          <div class="flex-1 text-left">pH：</div>
+          <div class="flex-1 text-right">
+            <em>6.7</em>
+          </div>
+
+          </div>
+
+    <div class="row">
+            <div class="flex-1 text-left">COD：</div>
+            <div class="flex-1 text-right">
+              <em>5.00</em>mg/L</div>
+
+            </div>
+
+            <div class="row">
+                    <div class="flex-1 text-left">BOD：</div>
+                    <div class="flex-1 text-right">
+                      <em>5.00</em>mg/L</div>
+            </div>
+
+            <div class="row">
+                <div class="flex-1 text-left">总磷：</div>
+                <div class="flex-1 text-right">
+                    <em class="text-red">15.00</em>mg/L
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="flex-1 text-left">氨氮：</div>
+                <div class="flex-1 text-right">
+                    <em class="text-red">5.00</em>mg/L
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="flex-1 text-left">SS：</div>
+                <div class="flex-1 text-right">
+                    <em class="text-red">5.00</em>mg/L
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="flex-1 text-left">总氮：</div>
+                <div class="flex-1 text-right">
+                    <em class="text-red">--</em>mg/L
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="flex-1 text-left">大肠杆菌：</div>
+                <div class="flex-1 text-right">
+                    <em class="text-red">--</em>个/L
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="flex-1 text-left">水质分类：</div>
+                <div class="flex-1 text-right">
+                    <em class="text-green">一级A</em>
+                </div>
+            </div>
+
+            <div class="line-dotted"></div>
+            <div class="list-block-footer clearfix">
+                <div class="btnpull-right">查看详情</div>
+            </div>
+</div>
+    </div>
+
+<div class="list-block" tapmode="highlight" onclick="openGroupFrames();">
+    <div class="list-block-header clearfix">
+            <span class="title">
+                <img class="icon" src="../image/home/nav/shape_shuiku.png" alt="">白沙湾污水一厂-出水口
+            </span>
+            <span class="label label-danger pull-right">不达标</span>
+
+    </div>
+    <div class="list-block-main">
+      <div class="row">
+          <div class="flex-1 text-left">pH：</div>
+              <div class="flex-1 text-right">
+                <em>6.7</em>
+              </div>
+
+              </div>
+
+        <div class="row">
+              <div class="flex-1 text-left">COD：</div>
+              <div class="flex-1 text-right">
+              <em>5.00</em>mg/L</div>
+
+        </div>
+
+<div class="row">
+    <div class="flex-1 text-left">BOD：</div>
+    <div class="flex-1 text-right">
+        <em>5.00</em>mg/L</div>
+</div>
+
+<div class="row">
+    <div class="flex-1 text-left">总磷：</div>
+    <div class="flex-1 text-right">
+        <em>5.00</em>mg/L
+    </div>
+</div>
+
+<div class="row">
+    <div class="flex-1 text-left">氨氮：</div>
+    <div class="flex-1 text-right">
+        <em class="text-red">5.00</em>mg/L
+    </div>
+</div>
+
+<div class="row">
+    <div class="flex-1 text-left">SS：</div>
+    <div class="flex-1 text-right">
+        <em class="text-red">5.00</em>mg/L
+    </div>
+</div>
+
+<div class="row">
+    <div class="flex-1 text-left">总氮：</div>
+    <div class="flex-1 text-right">
+        <em class="text-red">--</em>mg/L
+    </div>
+</div>
+
+<div class="row">
+    <div class="flex-1 text-left">大肠杆菌：</div>
+    <div class="flex-1 text-right">
+        <em class="text-red">--</em>个/L
+    </div>
+</div>
+
+<div class="row">
+    <div class="flex-1 text-left">水质分类：</div>
+    <div class="flex-1 text-right">
+        <em class="text-green">一级A</em>
+    </div>
+</div>
+
+<div class="line-dotted"></div>
+<div class="list-block-footer clearfix">
+    <div class="btnpull-right">查看详情</div>
+</div>
+
+    </div>
+        </div>
+</div>
+
+<!-- 虚假页面完毕 -->
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+<script type="text/javascript">
+// var searchBar = null,
+//     $container = document.querySelector('#main'),
+//     sheet = app.unitActionSheet('#unit', function(selectedIndex, selectedValue, selectedItem) {
+//         loadData();
+//     });
+
+apiready = function() {
+    var UISearchBar = api.require('UISearchBar');
+    searchBar = new LDSearchBar(UISearchBar, '输入关键字名称查找污水厂站', function(ret) {
+        loadData(ret.text);
+    });
+
+    app.setRefreshHeaderInfo(loadData);
+    loadData();
+};
+
+function loadData(name) {
+    var now = new Date();
+    now.setMinutes(now.getMinutes() - 20);
+
+
+    // 从api获取数据，路径：script/api.js
+    // app.ajax({
+    //     url: app.urls.getListWH_Reservoir_RealByParam,
+    //     data: {
+    //         organizationId: sheet.getSelectedItem().Id,
+    //         name: name || ''
+    //     },
+
+        // 引入ejs模板文件
+        // template: JST.rsvr_list,
+        // debug: false,
+
+        // 最近一次刷新数据的时间
+        // template_data: function(row) {
+        //     if (row.ReportDate == '0001-01-01 00:00:00') {
+        //         row.devFaultState = true;
+        //     } else {
+        //         row.devFaultState = false;
+        //     }
+        //     return row;
+        // },
+
+
+        // sortBy: function (data) {
+        //     return _.sortBy(data, 'ReportDate').reverse();
+        // },
+        // success: function(data, html) {
+        //     api.hideProgress();
+        //     app.refreshHeaderLoadDone();
+        //     $container.innerHTML = html;
+        // }
+    // });
+}
+//
+// function openUnitActionSheet() {
+//     sheet.open();
+// }
+
+function openSearchWindow() {
+    searchBar.open();
+}
+
+
+//  加载为静态页面,避免参数传递
+// function openGroupFrames(id, name, reportDate, deviceId, projectId) {
+function openGroupFrames() {
+    api.openWin({
+        name: 'waterquality_detail',
+        url: './newcharts/waterquality_detail.html',
+        // pageParam: {
+        //     id: id,
+        //     name: name,
+        //     reportDate: reportDate,
+        //     deviceId: deviceId,
+        //     projectId: projectId
+        // }
+    });
+}
+// 打开该条数据的详情界面
+
+</script>
+
+</html>

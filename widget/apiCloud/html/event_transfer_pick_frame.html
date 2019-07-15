@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>event_transfer_pick_frame</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/glyphicons.css" />
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body class="flex-box-v">
+    <div id="search" tapmode onclick="openSearchWindow();">
+        <div class="search-warp">
+            <input type="text" placeholder="输入关键字名称查找人员" readonly="readonly">
+        </div>
+    </div>
+  <div id="main">
+    <ul class="aui-list aui-media-list">
+      <li class="aui-list-header">
+          点击选择流转对象
+      </li>
+            <li class="aui-list-item aui-list-item-middle" onclick="OpenSuccessFrames();">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media" style="width: 3rem;">
+                        <img src="../image/boy1.png" class="aui-img-round aui-list-img-sm">
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text">
+                          <div class="aui-list-item-title aui-font-size-14">张建伟, <span class="aui-font-size-12">巡检员</span></div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            宜宾南岸污水处理厂
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item aui-list-item-middle" onclick="openDialogText();">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media" style="width: 3rem;">
+                        <img src="../image/boy1.png" class="aui-img-round aui-list-img-sm">
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-font-size-14">张永刚, <span class="aui-font-size-12">技术员</span></div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            宜宾杨湾污水处理厂
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item aui-list-item-middle" onclick="openDialogText();">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media" style="width: 3rem;">
+                        <img src="../image/boy1.png" class="aui-img-round aui-list-img-sm">
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text">
+                          <div class="aui-list-item-title aui-font-size-14">张建伟, <span class="aui-font-size-12">巡检员</span></div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            宜宾南岸污水处理厂
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item aui-list-item-middle" onclick="openDialogText();">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media" style="width: 3rem;">
+                        <img src="../image/boy1.png" class="aui-img-round aui-list-img-sm">
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-font-size-14">张永刚, <span class="aui-font-size-12">技术员</span></div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            宜宾杨湾污水处理厂
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item aui-list-item-middle" onclick="openDialogText();">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media" style="width: 3rem;">
+                        <img src="../image/boy1.png" class="aui-img-round aui-list-img-sm">
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text">
+                          <div class="aui-list-item-title aui-font-size-14">张建伟, <span class="aui-font-size-12">巡检员</span></div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            宜宾南岸污水处理厂
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item aui-list-item-middle" onclick="openDialogText();">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media" style="width: 3rem;">
+                        <img src="../image/boy1.png" class="aui-img-round aui-list-img-sm">
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-font-size-14">张永刚, <span class="aui-font-size-12">技术员</span></div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            宜宾杨湾污水处理厂
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript">
+var searchBar = null;
+apiready = function() {
+    var UISearchBar = api.require('UISearchBar');
+    searchBar = new LDSearchBar(UISearchBar, '输入关键字名称查找', function(ret) {
+        alert(JSON.stringify(ret));
+    });
+};
+
+function openSearchWindow() {
+    searchBar.open();
+}
+function openDialogText() {
+    //非必填,添加流转说明,弹出框形式
+}
+function OpenSuccessFrames() {
+    api.openWin({
+        name: 'eventtransfer_success',
+        url: 'eventtransfer_success.html',
+        pageParam: {
+            name: 'value'
+        }
+    });
+}
+
+
+</script>
+
+</html>

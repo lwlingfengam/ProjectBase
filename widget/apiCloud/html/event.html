@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>event list 事件列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body class="flex-box-v">
+    <header id="header">
+        <div class="back" tapmode onclick="api.closeWin();">
+            <img src="../image/back.png">
+        </div>
+        <div class="title">事件列表</div>
+    </header>
+    <div id="nav" class="scroll-nav">
+        <div class="scroll-nav-main">
+            <ul>
+                <li class="nav-item active" tapmode>全部问题</li>
+                <li class="nav-item" tapmode>我的问题</li>
+                <!-- <li class="nav-item" tapmode>处理中</li>
+                <li class="nav-item" tapmode>已完成</li> -->
+            </ul>
+        </div>
+    </div>
+    <div id="main" class="flex-1">
+    </div>
+    <footer id="footer">
+    </footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/scrollnav.js"></script>
+<script type="text/javascript">
+var scrollNav = new LDScrollNav('nav', function(index) {
+    if (index != 4) {
+        api.sendEvent({
+            name: 'warn_detail_changed',
+            extra: {
+                hidden: true
+            }
+        });
+    } else {
+        api.sendEvent({
+            name: 'warn_detail_changed',
+            extra: {
+                hidden: false
+            }
+        });
+    }
+
+    api.setFrameGroupIndex({
+        name: 'rsvrFrameGroup',
+        index: index,
+        scroll: true
+    });
+});
+
+apiready = function() {
+    var param = api.pageParam;
+
+    // document.querySelector('#title').innerHTML = param.name;
+
+    var header = $api.byId('header'),
+        footer = $api.byId('footer'),
+        nav = $api.byId('nav'),
+        headerH = $api.fixStatusBar(header),
+        footerH = $api.fixTabBar(footer),
+        navH = $api.offset(nav).h;
+
+    var frames = [];
+    frames.push({ name: 'event_all_frame', url: 'event_all_frame.html' });
+    frames.push({ name: 'event_my_frame', url: 'event_my_frame.html' });
+    // frames.push({ name: 'event_transfer_frame', url: 'event_transfer_frame.html' });
+    // frames.push({ name: 'event_end_frame', url: 'event_end_frame.html' });
+
+    api.openFrameGroup({
+        name: 'rsvrFrameGroup',
+        scrollEnabled: false,
+        rect: {
+            marginTop: headerH + navH,
+            marginBottom: footerH,
+            w: 'auto',
+            h: 'auto'
+        },
+        index: 0,
+        frames: frames,
+        preload: 1
+    }, function(ret, err) {
+        scrollNav.setIndex(ret.index);
+    });
+};
+</script>
+
+</html>

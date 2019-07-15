@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>event detail frame</title>
+    <!--  巡检上报问题详情 -->
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+
+<div id="main" class="flex-1">
+  <div class="list-block">
+      <div class="list-block-main">
+        <div class="row">
+          <div class="flex-1 text-left datetime">上报人员:</div>
+          <div class="flex-1 text-right  ">管理员</div>
+        </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题编号:</div>
+            <div class="flex-1 text-right  ">HZZ220181115092440946</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题对象:</div>
+            <div class="flex-1 text-right  ">宜宾南岸污水处理厂</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题类型:</div>
+            <div class="flex-1 text-right  ">检查上报</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题级别:</div>
+            <div style="color:#ff0000" class="flex-1 text-right">紧急</div>
+          </div>
+
+          <div class="row">
+            <div class="flex-1 text-left datetime">处理状态:</div>
+            <div class="flex-1 text-right  ">已解决</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">创建时间:</div>
+            <div class="flex-1 text-right  ">2019.4.3 12:34:43</div>
+          </div>
+
+
+        <div class="line-dotted"></div>
+          <span style="color: #333" class="title"><strong>张建伟,</strong> 白沙湾污水一厂, 巡检员</span>
+          <div class="list-block-main">
+            <div class="row">
+              <div class="flex-1 text-left datetime">时间:</div>
+              <div class="flex-1 text-right  ">2019-06-28 16:44:04</div>
+            </div>
+              <div class="row">
+                <div class="flex-1 text-left datetime">问题描述:</div>
+              </div>
+              <div class="row">
+                <div style="margin : 10px 0px 15px 15px;" class="flex-1 text-left ">问题描述说明,字数显示为300字,予以换行显示<br>字数显示为300字,予以换行显示</div>
+              </div>
+              <div class="row">
+                <div class="flex-1 text-left datetime">附件:</div>
+              </div>
+              <div class="row">
+                <div class="flex-1 text-left eventimgdiv">
+                <img class="eventimgthumb" src="../image/001234.jpg" alt="">
+                <img class="eventimgthumb" src="../image/001233.jpg" alt="">
+                <img class="eventimgthumb" src="../image/001232.jpg" alt="">
+                <img class="eventimgthumb" src="../image/001231.jpg" alt="">
+                </div>
+              </div>
+          </div>
+          <div class="line-dotted"></div>
+            <span style="color: #333" class="title"><strong>张建伟,</strong> 白沙湾污水一厂, 技术员</span>
+            <div class="list-block-main">
+              <div class="row">
+                <div class="flex-1 text-left datetime">时间:</div>
+                <div class="flex-1 text-right  ">2019-06-29 16:44:04</div>
+              </div>
+                <div class="row">
+                  <div class="flex-1 text-left datetime">回复:</div>
+                </div>
+                <div class="row">
+                  <div style="margin : 10px 0px 15px 15px;" class="flex-1 text-left ">无</div>
+                </div>
+                <div class="row">
+                  <div class="flex-1 text-left datetime">附件:</div>
+                </div>
+                <div class="row">
+                  <div class="flex-1 text-left eventimgdiv">
+                  <img class="eventimgthumb" src="../image/001233.jpg" alt="">
+                  </div>
+                </div>
+            </div>
+
+        </div>
+          <footer class="aui-bar aui-bar-tab">
+            <div class="aui-bar-tab-item" tapmode style="width: 5rem;">
+                <i class="aui-iconfont aui-icon-comment aui-text-gray"></i>
+                <div class="aui-bar-tab-label aui-text-gray">添加说明</div>
+            </div>
+            <div class="aui-bar-tab-item aui-bg-gray aui-text-white" tapmode style="width: auto;" >任务派发</div>
+            <div class="aui-bar-tab-item aui-bg-gray aui-text-white" tapmode style="width: auto;" >结束任务</div>
+        </footer>
+      </div>
+  </div>
+</div>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/onlinefile.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+<script type="text/javascript">
+var searchBar = null,
+    onlineFile = null,
+    $container = document.querySelector('#mediaList');
+
+function openTransferFrames() {
+api.openWin({
+    name: 'event_transfer_pick',
+    url: 'event_transfer_pick.html',
+    pageParam: {
+        id: id,
+        name: name
+    }
+});
+}
+</script>
+
+</html>

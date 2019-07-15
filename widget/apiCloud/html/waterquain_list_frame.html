@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" href="../css/api.css"/>
+    <link rel="stylesheet" href="../css//border.css">
+    <link rel="stylesheet" type="text/css" href="../css/mint-ui.css" />
+    <link rel="stylesheet" href="../css/site_detail.css">
+</head>
+<body>
+    <div id="app" class="frm-realtime" v-clock>
+
+        <div class="title-bar">
+            <span class="title-bar-name">全部实时取值</span>
+            <span class="title-bar-info">2019-07-01 14:03:33</span>
+        </div>
+        <div class="view">
+            <div class="view-item" :class="{active: index === viewData.current, error: item.isError}" v-for="(item, index) in viewData.list" :key="index" @click="changeViewDataType(index)">
+                <span class="view-item-value">{{item.value}} <span class="view-item-unit" v-if="item.unit">{{item.unit}}</span></span>
+                <span class="view-item-label">{{item.label}}</span>
+            </div>
+        </div>
+        <div class="title-bar">
+            <span class="title-bar-name">走势图 - {{currentViewItem.label}}</span>
+            <span class="title-bar-info">
+                <span @click="$refs.trendStartPicker.open()">{{trendData.timeStart}} <img src="../../image/common/arrow-down.png" alt=""></span>
+                <span>至</span>
+                <span @click="$refs.trendEndPicker.open()">{{trendData.timeEnd}} <img src="../../image/common/arrow-down.png" alt=""></span>
+            </span>
+        </div>
+        <div class="trend-wrap">
+            <div class="trend-info">
+                <span>最高{{currentViewItem.label}} <span class="trend-value">{{trendData.data.MaxValue}}</span>{{currentViewItem.unit}}</span>
+                <span>{{trendData.data.MaxValueTime}}</span>
+            </div>
+            <div class="trend-info">
+                <span>最低{{currentViewItem.label}} <span class="trend-value">{{trendData.data.MinValue}}</span>{{currentViewItem.unit}}</span>
+                <span>{{trendData.data.MinValueTime}}</span>
+            </div>
+            <div style="width: 100%; height: 220px;">
+                <trend-chart v-if="trendData.chartData.data.length" :data="trendData.chartData" color="#5baafd" :title="currentViewItem.label" :unit="currentViewItem.unit"></trend-chart>
+            </div>
+            <!-- <div style="padding: 0 15px 15px 0; text-align: right;">
+                <span class="screen-open" @click="setFullScreen">全屏查看</span>
+            </div> -->
+        </div>
+
+        <!-- 走势图开始时间 -->
+
+        <!-- 走势图结束时间 -->
+
+        <!-- 异常分析开始时间 -->
+
+        <!-- 异常分析结束时间 -->
+
+        <!-- 全屏内容 -->
+
+    </div>
+    <script src="../script/lib/api.js"></script>
+    <script src="../script/lib/vue.min.js"></script>
+    <script src="../script/lib/underscore-min.js"></script>
+    <script src="../script/lib/echarts.js"></script>
+    <script src="../script/lib/mint-ui.js"></script>
+    <script src="../script/lib/moment.js"></script>
+    <script src="../script/wj-ajax.js"></script>
+    <script src="../script/wj-framework.js"></script>
+    <script src="./newchats/config.js"></script>
+    <script src="./newchats/site_detail.js"></script>
+    <script src="../script/components/map/trend-chart.js"></script>
+    <script>
+        apiready = function () {
+            var code = api.pageParam.code
+            var vm = new Vue({
+                el: '#app',
+                components: {
+                    'trend-chart': TrendChart
+                },
+                data: function () {
+                    return {
+                        realtime: moment().format('HH:mm YYYY-MM-DD'),
+                        viewData: {
+                            current: 0,
+                            list: genViewData()
+                        },
+                        trendData: {
+                            timeStart: moment().subtract(7,'d').format(FORMAT),
+                            timeEnd: moment().format(FORMAT),
+                            data: {},
+                            chartData: {
+                                category: [],
+                                data: [],
+                            }
+                        },
+                        abnormalData: {
+                            timeStart: moment().subtract(7,'d').format(FORMAT),
+                            timeEnd: moment().format(FORMAT),
+                            data: []
+                        },
+                        fullScreen: {
+                            show: false,
+                            width: api.pageParam.winHeight + 'px',
+                            height: api.pageParam.winWidth + 'px'
+                        }
+                    }
+                },
+                mounted: function () {
+                    this.getViewData()
+                },
+                methods: {
+                    getViewData: function () {
+                        wjpost('NewAppCom/GetSiteDataDetailQuery', {Stcd: code || ''}, function (data, status) {
+                            if(data) {
+                                _data = data.Data || {}
+                                vm.realtime = moment(_data.SPT).format('HH:mm YYYY-MM-DD')
+                                _.filter(vm.viewData.list, function (item) {
+                                    item.value = _data[item.key] || 0
+                                    item.isError = _data[item.key + 'Excessive']
+                                })
+                                vm.getTrendData()
+                                vm.getAbnormalData()
+                            }
+                        })
+                    },
+                    getTrendData: function () {
+                        wjpost('NewAppCom/GetSiteParameterDetailQuery', {
+                            "STCD": code,
+                            "FK_ParameterName": this.currentViewItem.key,
+                            "StartTime": this.trendData.timeStart,
+                            "EndTime": this.trendData.timeEnd
+                        }, function (data, status) {
+                            if(data) {
+                                var data = data.Data
+                                data.MaxValueTime = moment(data.MaxValueTime).format(MAX_MIN_FORMAT)
+                                data.MinValueTime = moment(data.MinValueTime).format(MAX_MIN_FORMAT)
+                                vm.trendData.data = data
+                                vm.trendData.chartData = processTrendData(data.site_AvgParameterList, 'Paravalue')
+                                if(data.ThresholdMax && data.ThresholdMin) {
+                                    vm.trendData.chartData.pieces = [
+                                        {min: data.ThresholdMax, max: 9999, color: '#E55757'},
+                                        {min: -9999, max: data.ThresholdMin, color: '#E55757'}
+                                    ]
+                                } else {
+                                    vm.trendData.chartData.pieces = null
+                                }
+                            }
+                        })
+                    },
+                    getAbnormalData: function () {
+                        wjpost('NewAppCom/GetAbnormalAnalysisList', {
+                            "STCD": code,
+                            "FK_ParameterName": this.currentViewItem.label,
+                            "StartTime": this.abnormalData.timeStart,
+                            "EndTime": this.abnormalData.timeEnd
+                        }, function (data, status) {
+                            if(data) {
+                                _.filter(data.Data, function (item) {
+                                    item.Warning_Time = moment(item.Warning_Time).format(MAX_MIN_FORMAT)
+                                })
+                                vm.abnormalData.data = data.Data
+                            }
+                        })
+                    },
+                    changeViewDataType: function (index) {
+                        if(this.viewData.current !== index) {
+                            this.viewData.current = index
+                            vm.getTrendData()
+                            vm.getAbnormalData()
+                        }
+                    },
+                    setFullScreen: function () {
+                        this.fullScreen.show = true
+                        setFullScreen()
+                        emitWinFullScreen(1)
+                    },
+                    closeFullScrren: function () {
+                        this.fullScreen.show = false
+                        closeFullScrren()
+                        emitWinFullScreen(0)
+                    },
+                    // 选择日期
+                    Timeconfirm: function (value, index, type) {
+                        var _value = moment(value).format(FORMAT)
+                        // 趋势
+                        if(index === 0) {
+                            if(type === 0) {
+                                this.trendData.timeStart = _value
+                            } else {
+                                this.trendData.timeEnd = _value
+                            }
+                            this.getTrendData()
+                        } else {
+                            if(type === 0) {
+                                this.abnormalData.timeStart = _value
+                            } else {
+                                this.abnormalData.timeEnd = _value
+                            }
+                            this.getAbnormalData()
+                        }
+                    }
+                },
+                computed: {
+                    currentViewItem: function () {
+                        return this.viewData.list[this.viewData.current]
+                    }
+                }
+            })
+        }
+
+        // 生成实时取值类型
+        function genViewData() {
+            return _.map(VIEW_DATA_TYPES, function (item) {
+                return {
+                    label: item.label,
+                    name: item.name,
+                    unit: item.unit,
+                    key: item.key,
+                    value: 0
+                }
+            })
+        }
+    </script>
+</body>
+</html>

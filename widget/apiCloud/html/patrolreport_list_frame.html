@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>patrolreport list frame</title>
+<!--  巡检报告列表页面 -->
+<link rel="stylesheet" type="text/css" href="../css/api.css" />
+<link rel="stylesheet" type="text/css" href="../css/glyphicons.css" />
+<style type="text/css">
+.btnpull-right {
+background-color: #ffffff; /* Green */
+border: none;
+color: green;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+/*margin: 4px 2px;*/
+-webkit-transition-duration: 0.4s; /* Safari */
+transition-duration: 0.4s;
+cursor: pointer;
+float:right;
+border-radius: 12px;
+border: 1px solid #4CAF50;
+}
+html,
+body {
+    height: 100%;
+    position:relative;
+}
+footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:100px;
+
+}
+</style>
+</head>
+
+<body class="flex-box-v">
+
+<!-- 虚假页面 -->
+<div class="list-block" tapmode="highlight" onclick="openGroupFrames();">
+    <div class="list-block-header clearfix">
+        <span class="title">
+            <img class="icon" src="../image/home/nav/shape_shuiku.png" alt="">2018下半年 第 2 次检查
+        </span>
+            <span class="label label-info pull-right">正在巡检...</span>
+    </div>
+          <div class="list-block-main">
+              <div class="row">
+                  <div class="flex-1 text-left">检查周期:</div>
+                  <div class="flex-1 text-right datetime">2018下半年</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查报告编码：</div>
+                  <div class="flex-1 text-right">HZZ220181115092440946</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查报告日期：</div>
+                  <div class="flex-1 text-right">2018-11-15 09:28:58</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查人员：</div>
+                  <div class="flex-1 text-right">管理员</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">本次检查上报异常数量：</div>
+                  <div class="flex-1 text-right">2</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查历时：</div>
+                  <div class="flex-1 text-right">00时04分18秒</div>
+              </div>
+          <div class="line-dotted"></div>
+              <div class="list-block-footer clearfix">
+                  <div class="btnpull-right">查看详情</div>
+              </div>
+          </div>
+</div>
+<div class="list-block" tapmode="highlight" onclick="openGroupFrames();">
+    <div class="list-block-header clearfix">
+        <span class="title">
+            <img class="icon" src="../image/home/nav/shape_shuiku.png" alt="">2018下半年 第 1 次检查
+        </span>
+            <span class="label label-danger pull-right">2条上报</span>
+    </div>
+          <div class="list-block-main">
+              <div class="row">
+                  <div class="flex-1 text-left">检查周期:</div>
+                  <div class="flex-1 text-right datetime">2018下半年</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查报告编码：</div>
+                  <div class="flex-1 text-right">HZZ220181115092440945</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查报告日期：</div>
+                  <div class="flex-1 text-right">2018-10-15 09:28:58</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查人员：</div>
+                  <div class="flex-1 text-right">管理员</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">本次检查上报异常数量：</div>
+                  <div class="flex-1 text-right">0</div>
+              </div>
+              <div class="row">
+                  <div class="flex-1 text-left">检查历时：</div>
+                  <div class="flex-1 text-right">00时04分18秒</div>
+              </div>
+          <div class="line-dotted"></div>
+              <div class="list-block-footer clearfix">
+                  <div class="btnpull-right">查看详情</div>
+              </div>
+          </div>
+</div>
+<footer style="margin : 10px 0px 15px 200px;" id="footer">
+<div pull-left style="margin : 10px 0px 15px 15px; width: 120px;" onclick="openPatrolbeganActionSheet();">
+  <img style="width: 40px; height: 40px; margin : 10px 0px 15px 7px;" src="../image/u2402.png">
+    <p>开始巡检</p>
+</div>
+<div pull-left style="margin : 10px 0px 15px 15px; width: 120px;" onclick="openPatroloverActionSheet();">
+  <img style="width: 40px; height: 40px; margin : 10px 0px 15px 7px;" src="../image/u2403.png">
+    <p>结束巡检</p>
+</div>
+
+</footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+<script type="text/javascript">
+// var searchBar = null,
+//     $container = document.querySelector('#main'),
+//     sheet = app.unitActionSheet('#unit', function(selectedIndex, selectedValue, selectedItem) {
+//         loadData();
+//     });
+
+apiready = function() {
+    var UISearchBar = api.require('UISearchBar');
+    searchBar = new LDSearchBar(UISearchBar, '输入关键字名称查找工艺', function(ret) {
+        loadData(ret.text);
+    });
+
+    app.setRefreshHeaderInfo(loadData);
+    loadData();
+};
+
+function loadData(name) {
+    var now = new Date();
+    now.setMinutes(now.getMinutes() - 20);
+
+
+    // 从api获取数据，路径：script/api.js
+    // app.ajax({
+    //     url: app.urls.getListWH_Reservoir_RealByParam,
+    //     data: {
+    //         organizationId: sheet.getSelectedItem().Id,
+    //         name: name || ''
+    //     },
+
+        // 引入ejs模板文件
+        // template: JST.rsvr_list,
+        // debug: false,
+
+        // 最近一次刷新数据的时间
+        // template_data: function(row) {
+        //     if (row.ReportDate == '0001-01-01 00:00:00') {
+        //         row.devFaultState = true;
+        //     } else {
+        //         row.devFaultState = false;
+        //     }
+        //     return row;
+        // },
+
+
+        // sortBy: function (data) {
+        //     return _.sortBy(data, 'ReportDate').reverse();
+        // },
+        // success: function(data, html) {
+        //     api.hideProgress();
+        //     app.refreshHeaderLoadDone();
+        //     $container.innerHTML = html;
+        // }
+    // });
+}
+
+// function openUnitActionSheet() {
+//     sheet.open();
+// }
+
+function openSearchWindow() {
+    searchBar.open();
+}
+
+function openGroupFrames(id, name) {
+api.openWin({
+    name: 'patrolreport_detail',
+    url: 'patrolreport_detail.html',
+    pageParam: {
+        id: id,
+        name: name
+    }
+});
+}
+</script>
+
+</html>

@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>视频通话</title>
+    <style>
+    </style>
+</head>
+<body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        var agoraRtc, pageParam
+        apiready = function () {
+            agoraRtc = api.require('agoraRtc')
+            pageParam = getPageParamData()
+            init()
+            enableVideo()
+        }
+
+        function getPageParamData() {
+            var pageParam = {}
+            var data = api.pageParam.data
+            pageParam.appId = data.appId  //appId
+            pageParam.channelName=data.channelName
+            pageParam.frameName = data.frameName //显示视频的frame名称
+            pageParam.rectFrame = data.rectFrame //frame的位置
+            if (!pageParam.rectPlayer) {
+                pageParam.rectPlayer = {
+                    x: 0, // （可选项）数字类型；模块左上角的 x 坐标（相对于所属的 Window 或 Frame）；默认值：0
+                    y: 0, // （可选项）数字类型；模块左上角的 y 坐标（相对于所属的 Window 或 Frame）；默认值：0
+                    w: api.frameWidth, // (可选项)数字类型;模块宽度（相对于所属的 Window 或 Frame;默认300
+                    h: pageParam.rectFrame.h // (可选项)数字类型;模块高度（相对于所属的 Window 或 Frame;默认300
+                }
+            }
+            return pageParam
+        }
+        function init() {
+            agoraRtc.init({ appId: pageParam.appId })
+            joinChannelSuccessListener()
+            remoteUserJoinedListener()
+        }
+
+        function destroy() {
+            agoraRtc.destroy()
+            leaveChannel()
+        }
+
+        function joinChannel(uid) {
+            if (!uid) {
+                uid = 0
+            }
+            agoraRtc.joinChannel({
+                channel: pageParam.channelName,
+                uid: uid
+            }, function (ret) {
+                if (ret.code == 0) {
+                }
+                else {
+                    api.alert({ title: '加入频道失败' })
+                }
+            })
+        }
+
+        function leaveChannel() {
+            agoraRtc.leaveChannel(function (ret) {
+                if (ret.code == 0) {
+                    api.alert({ title: '离开频道成功' })
+                }
+                else {
+                    api.alert({ title: '离开频道失败' })
+                }
+            })
+        }
+
+        function enableVideo() {
+            agoraRtc.enableVideo(function (ret) {
+                if (ret.code == 0) {
+                    setupLocalVideo()
+                }
+                else {
+                    api.alert({ title: '开启视频模式失败' })
+                }
+            })
+        }
+
+        function disableVideo() {
+            agoraRtc.disableVideo(function (ret) {
+                if (ret.code == 0) {
+                    api.alert({ title: '关闭视频模式成功' })
+                }
+                else {
+                    api.alert({ title: '关闭视频模式失败' })
+                }
+            })
+        }
+
+        function switchCamera() {
+            agoraRtc.switchCamera(function (ret) {
+                if (ret.code == 0) {
+                    api.alert({ title: '切换前置/后置摄像头成功' })
+                }
+                else {
+                    api.alert({ title: '关闭前置/后置摄像头失败' })
+                }
+            })
+        }
+
+        function startPreview() {
+            agoraRtc.startPreview(function (ret) {
+                if (ret.code == 0) {
+                    api.alert({ title: '开启本地预览成功' })
+                }
+                else {
+                    api.alert({ title: '关闭本地预览失败' })
+                }
+            })
+        }
+
+        function stopPreview() {
+            agoraRtc.stopPreview(function (ret) {
+                if (ret.code == 0) {
+                    api.alert({ title: '关闭本地预览成功' })
+                }
+                else {
+                    api.alert({ title: '关闭本地预览失败' })
+                }
+            })
+        }
+
+        function setupLocalVideo() {
+            agoraRtc.setupLocalVideo({
+                rect: pageParam.rectPlayer,
+                fixedOn: pageParam.frameName,
+                fixed: true,
+                renderMode: 1
+            }, function (ret) {
+                if (ret.code == 0) {
+                }
+                else {
+                    api.alert({ title: '设置本地视频显示信息失败' })
+                }
+            });
+        }
+
+        function setupRemoteVideo(uid) {
+            agoraRtc.setupRemoteVideo({
+                uid: uid,
+                rect: pageParam.rectPlayer,
+                fixedOn: pageParam.frameName,
+                fixed: true,
+                renderMode: 1
+            }, function (ret) {
+                if (ret.code == 0) {
+                }
+                else {
+                    api.alert({ title: '绑定远程用户和显示视图失败' })
+                }
+            });
+        }
+
+        function removeRemoteVideo(uid)
+        {
+            agoraRtc.setupRemoteVideo({
+                uid: uid,
+            }, function (ret) {
+                if (ret.code == 0) {
+                }
+                else {
+                    api.alert({ title: '解绑远程用户和显示视图失败' })
+                }
+            });
+        }
+
+        function joinChannelSuccessListener() {
+            agoraRtc.joinChannelSuccessListener(function (ret) {
+            })
+        }
+
+        function leaveChannelListener() {
+            agoraRtc.leaveChannelListener(function () {
+            });
+        }
+
+        function firstLocalVideoFrameListener() {
+            agoraRtc.firstLocalVideoFrameListener(function (ret) {
+            })
+        }
+
+        function remoteUserJoinedListener() {
+            agoraRtc.remoteUserJoinedListener(function (ret) {
+                var uid=ret.uid
+                setupRemoteVideo(uid)
+            });
+        }
+
+        function remoteUserOfflineListener() {
+            agoraRtc.remoteUserOfflineListener(function (ret) {
+                var uid=ret.uid
+                removeRemoteVideo(uid)
+            });
+        }
+
+        function firstRemoteVideoDecodedListener()
+        {
+            agoraRtc.firstRemoteVideoDecodedListener(function (ret) {
+
+            });
+        }
+
+        function errorListener() {
+            agoraRtc.errorListener(function (ret) {
+            });
+        }
+    </script>
+</body>
+
+</html>

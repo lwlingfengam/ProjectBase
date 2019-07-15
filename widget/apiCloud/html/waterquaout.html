@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>waterquaout window 出水水质</title>
+    <!-- 出水水质窗口 -->
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body class="flex-box-v">
+    <header id="header">
+        <!-- <div class="back" tapmode onclick="api.closeWin();"> -->
+        <div class="back" tapmode onclick="toHome();">
+            <img src="../image/back.png">
+        </div>
+        <!-- <div class="title">出水水质</div> -->
+        <div class="aui-bar aui-bar-btn aui-bar-btn-round" style="width:45%;">
+            <div class="aui-bar-btn-item"  onclick="HeaderbtnItem()">进水口水质</div>
+            <div class="aui-bar-btn-item aui-active">出水口水质</div>
+        </div>
+    </header>
+    <!-- <div id="main" class="flex-1">
+    </div>
+    <footer id="footer">
+    </footer> -->
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+
+function toHome(){
+  api.openWin({
+      name: 'waterquaout',
+      url: 'home.html',
+
+  });
+}
+
+function HeaderbtnItem(){
+
+  api.openWin({
+      name: 'waterquaout',
+      url: 'waterquain.html',
+
+  });
+}
+apiready = function() {
+    var header = $api.dom('header');
+    var footer = $api.dom('footer');
+
+    var headerH = $api.fixStatusBar(header);
+    var footerH = $api.fixTabBar(footer);
+
+    // 在当前窗口加载页面
+        api.openFrame({
+        name: 'waterquaout_list_frame',
+        url: 'waterquaout_list_frame.html',
+        rect: {
+            marginTop: headerH,
+            marginBottom: footerH,
+            w: 'auto',
+            h: 'auto'
+        },
+        bounces: false
+    });
+};
+</script>
+
+</html>

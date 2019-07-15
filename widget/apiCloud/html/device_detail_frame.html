@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>device detail frame</title>
+<!--  设备参数详情页面 -->
+<link rel="stylesheet" type="text/css" href="../css/api.css" />
+<link rel="stylesheet" type="text/css" href="../css/glyphicons.css" />
+<style type="text/css">
+.btnpull-right {
+background-color: #ffffff; /* Green */
+border: none;
+color: green;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+/*margin: 4px 2px;*/
+-webkit-transition-duration: 0.4s; /* Safari */
+transition-duration: 0.4s;
+cursor: pointer;
+float:right;
+border-radius: 12px;
+border: 1px solid #4CAF50;
+},
+html,
+body {
+    height: 100%;
+}
+</style>
+</head>
+
+<body class="flex-box-v">
+    <div id="app">
+        <div id="search" tapmode onclick="openSearchWindow();">
+            <div class="search-warp">
+                <input type="text" placeholder="输入关键字名称查找" readonly="readonly">
+            </div>
+        </div>
+        <div id="filter">
+            <div class="filter-warp">
+                <div class="filter-item" tapmode onclick="openUnitActionSheet();">
+                    <span>白沙湾污水一厂</span><span class="glyphicon glyphicon-triangle-bottom"></span>
+                </div>
+                <div class="filter-item"></div>
+                <div class="filter-item"></div>
+            </div>
+        </div>
+
+        <div class="list-block" tapmode="highlight" v-for="item in data" >
+            <div class="list-block-header clearfix">
+              <span class="title" @click="item.active=!item.active">
+                <img class="icon" src="../image/home/nav/shape_shuiku.png" alt="">{{item.tittle}}
+            </span>
+            <img class="icon pull-right up-down" :src="item.active? '../image/arrow_up.png':'../image/arrow_down.png'" alt=""></img>
+                <span class="label pull-right">正常</span>
+            </div>
+
+            <div class="list-block-main" v-show="item.active" >
+                <div class="row">
+                    <div class="flex-1 text-left">电流(A)：</div>
+                    <div class="flex-1 text-right">5.6</div>
+                </div>
+
+                <div class="row">
+                    <div class="flex-1 text-left">电压(V)：</div>
+                    <div class="flex-1 text-right">380</div>
+                </div>
+                <div class="row">
+                    <div class="flex-1 text-left">频率(Hz)：</div>
+                    <div class="flex-1 text-right">50</div>
+                </div>
+                <div class="row">
+                    <div class="flex-1 text-left">状态：</div>
+                    <div class="flex-1 text-right">运行</div>
+                </div>
+                <div class="row">
+                    <div class="flex-1 text-left">工况：</div>
+                    <div class="flex-1 text-right">正常</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body><script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+<script type="text/javascript" src="../script/lib/vue.min.js"></script>
+<script type="text/javascript">
+// var searchBar = null,
+//     $container = document.querySelector('#main'),
+//     sheet = app.unitActionSheet('#unit', function(selectedIndex, selectedValue, selectedItem) {
+//         loadData();
+//     });
+
+apiready = function() {
+    var UISearchBar = api.require('UISearchBar');
+    searchBar = new LDSearchBar(UISearchBar, '输入关键字名称查找工艺', function(ret) {
+        loadData(ret.text);
+    });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            data: [{
+                active: false,
+                tittle:"提升泵"
+            }, {
+                active: false,
+                tittle:"2#提升泵"
+            }, {
+                active: false,
+                tittle:"粗格栅机"
+            }, {
+                active: false,
+                tittle:"细格栅机"
+            }, {
+                active: false,
+                tittle:"1#水泵"
+            }, {
+                active: false,
+                tittle:"2#水泵"
+            }]
+
+        },
+        mounted: function() {
+
+        },
+        methods: {
+
+        }
+    })
+
+    app.setRefreshHeaderInfo(loadData);
+    loadData();
+};
+
+function loadData(name) {
+    var now = new Date();
+    now.setMinutes(now.getMinutes() - 20);
+
+
+    // // 从api获取数据，路径：script/api.js
+    // app.ajax({
+    //     url: app.urls.DeviceInfoList,
+    //     data: {
+    //         organizationId: sheet.getSelectedItem().Id,
+    //         name: name || ''
+    //     },
+    //
+    //     // 引入ejs模板文件
+    //     template: JST.device_list,
+    //     debug: false,
+    //
+    //     // 最近一次刷新数据的时间
+    //     template_data: function(row) {
+    //         if (row.ReportDate == '0001-01-01 00:00:00') {
+    //             row.devFaultState = true;
+    //         } else {
+    //             row.devFaultState = false;
+    //         }
+    //         return row;
+    //     },
+    //
+    //
+    //     sortBy: function (data) {
+    //         return _.sortBy(data, 'ReportDate').reverse();
+    //     },
+    //     success: function(data, html) {
+    //         api.hideProgress();
+    //         app.refreshHeaderLoadDone();
+    //         $container.innerHTML = html;
+    //     }
+    // });
+}
+
+// function openUnitActionSheet() {
+//     sheet.open();
+// }
+
+function openSearchWindow() {
+    searchBar.open();
+}
+
+
+</script>
+
+</html>

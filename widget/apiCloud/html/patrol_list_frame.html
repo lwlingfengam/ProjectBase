@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>patrol list frame</title>
+<!--  巡检计划列表页面 -->
+<link rel="stylesheet" type="text/css" href="../css/api.css" />
+<link rel="stylesheet" type="text/css" href="../css/glyphicons.css" />
+<style type="text/css">
+.btnpull-right {
+background-color: #ffffff; /* Green */
+border: none;
+color: green;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+/*margin: 4px 2px;*/
+-webkit-transition-duration: 0.4s; /* Safari */
+transition-duration: 0.4s;
+cursor: pointer;
+float:right;
+border-radius: 12px;
+border: 1px solid #4CAF50;
+},
+html,
+body {
+    height: 100%;
+}
+</style>
+</head>
+
+<body class="flex-box-v">
+<div id="search" tapmode onclick="openSearchWindow();">
+    <div class="search-warp">
+        <input type="text" placeholder="输入关键字名称查找" readonly="readonly">
+    </div>
+</div>
+
+<!-- 虚假页面 -->
+<div id="main">
+<div class="list-block" tapmode="highlight" onclick="openGroupFrames();">
+    <div class="list-block-header clearfix">
+        <span class="title">
+            <img class="icon" src="../image/home/nav/shape_shuiku.png" alt="">巡检计划名称
+        </span>
+
+            <span class="label label-danger pull-right">-巡检状态-</span>
+
+    </div>
+          <div class="list-block-main">
+            <div class="row">
+                <div class="flex-1 text-left">开始时间:</div>
+                <div class="flex-1 text-right datetime">2019-03-18</div>
+            </div>
+          <div class="row">
+                <div class="flex-1 text-left">巡检对象：</div>
+                <div class="flex-1 text-right"><em>污水厂站</em></div>
+            </div>
+            <div class="row">
+                <div class="flex-1 text-left">巡检人员：</div>
+                <div class="flex-1 text-right"><em>管理员</em></div>
+            </div>
+            <div class="row">
+                <div class="flex-1 text-left">巡检周期类型：</div>
+                <div class="flex-1 text-right"><em>季度巡检</em></div>
+            </div>
+            <div class="row">
+                <div class="flex-1 text-left">巡检周期内次数：</div>
+                <div class="flex-1 text-right"><em>3</em>次</div>
+            </div>
+            <div class="row">
+                <div class="flex-1 text-left">结束时间:</div>
+                <!-- 替换<%= ReportDate %>为2019-03-18 -->
+                <div class="flex-1 text-right datetime">2019-06-18</div>
+            </div>
+                      <div class="line-dotted"></div>
+                      <div class="list-block-footer clearfix">
+                          <div class="btnpull-right">计划详情</div>
+                      </div>
+          </div>
+
+
+</body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/listview.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+<script type="text/javascript">
+function openGroupFrames() {
+    api.openWin({
+        name: 'patrolreport_list',
+        url: 'patrolreport_list.html',
+        // pageParam: {
+        //     id: id,
+        //     name: name,
+        //     reportDate: reportDate,
+        //     deviceId: deviceId,
+        //     projectId: projectId
+        // }
+    });
+}
+
+</script>
+
+</html>

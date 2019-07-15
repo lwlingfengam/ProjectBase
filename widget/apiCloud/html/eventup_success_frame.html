@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style type="text/css">
+    .result{
+           text-align: center;
+           background-color: #fff;
+           border-radius: 20px;
+           width: 300px;
+           height: 350px;
+           position: absolute;
+           left: 50%;
+           top: 50%;
+           transform: translate(-50%,-50%);
+        }
+        .aui-list .aui-list-item-media {
+            width: 3rem;
+        }
+        .notes-add {
+            position: fixed;
+            left: 0.5rem;
+            bottom: 0.5rem;
+            width: 3rem;
+            z-index: 99;
+        }
+        textarea {
+            height: 8rem;
+            background-color: #ffffff;
+            padding: 0.5rem;
+        }
+        .photos img {
+            display: block;
+            width: 100%;
+        }
+        .add-photos > div {
+            width: 100%;
+            height:5.15rem;
+            line-height: 5.15rem;
+        }
+        .add-photos > div .aui-iconfont {
+            font-size: 2rem;
+            color: #ccc;
+        }
+        .image-item {
+            position: relative;
+            height: 5.3rem;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+        .image-item img {
+            display: block;
+            margin: 0 auto;
+            width: auto;
+            height: 100%;
+        }
+        .image-item .delete-btn {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 28px;
+            height: 28px;
+            background-color: rgba(0,0,0,0.7);
+            margin-left: -14px;
+            margin-top: -14px;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+  <section class="aui-content-padded login-third">
+
+    <div class="aui-grid" style="background: none;">
+        <div class="aui-row">
+            <div class="aui-col-xs-4">
+                <i></i>
+            </div>
+            <div class="aui-col-xs-4">
+                <!-- <i class="aui-iconfont aui-icon-wechat"></i> -->
+                <img src="../image/u2401.png" alt=""></img>
+            </div>
+            <div class="aui-col-xs-4">
+                <i></i>
+            </div>
+        </div>
+    </div>
+  <p class="aui-font-size-12 aui-text-center aui-margin-b-15">提交成功</p>
+</section>
+
+<footer class="aui-bar aui-bar-tab" id="footer">
+<div class="aui-bar-tab-item aui-padded-l-15 aui-padded-r-15">
+    <div class="aui-btn aui-btn-block aui-btn-sm aui-btn-info" onclick="openGroupFrames();">
+      确认并返回主页
+    </div>
+</div>
+</footer>
+</body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+
+    function openGroupFrames() {
+        api.openWin({
+            name: 'home',
+            url: 'home.html',
+            // pageParam: {
+            //     id: id,
+            //     name: name,
+            //     reportDate: reportDate,
+            //     deviceId: deviceId,
+            //     projectId: projectId
+            // }
+        });
+    }
+</script>
+
+</html>

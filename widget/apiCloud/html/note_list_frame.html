@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>message list frame</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body class="flex-box-v">
+    <div id="search" tapmode onclick="openSearchWindow();">
+        <div class="search-warp">
+            <input type="text" placeholder="输入关键字名称查询" readonly="readonly">
+        </div>
+    </div>
+    <div id="main" class="flex-1">
+        <div id="mediaList" class="media-warp">
+            <div class="media" tapmode="active">
+                <div class="media-left">
+                    <img src="../image/home/nav/shape_zhengce.png" style="width: 16px; height: 16px;">
+                </div>
+                <div class="media-body">
+                    <p>三月水质监测培训活动</p>
+                    <p class="media-footing">
+                      根据上级要求，三月水质监测培训活动。
+                    </p>
+                    <p class="media-footing">
+                      类型: <span class="text-blue">办公新闻</span><span class="pull-right">2019-01-23 19:09:23</span>
+                    </p>
+                </div>
+            </div>
+            <div class="media" tapmode="active">
+                <div class="media-left">
+                    <img src="../image/home/nav/shape_zhengce.png" style="width: 16px; height: 16px;">
+                </div>
+                <div class="media-body">
+                    <p>水利部多种形式纪念“宪法宣传周”</p>
+                    <p class="media-footing">
+                      鄂竟平表示，宪法宣誓是对每一位公务员的精神洗礼，也是对广大党员干部的教育激励。他强调...
+                    </p>
+                    <p class="media-footing">
+                      类型: <span class="text-blue">公文公告</span><span class="pull-right">2019-01-23 19:09:23</span>
+                    </p>
+                </div>
+            </div>
+            <div class="media" tapmode="active">
+                <div class="media-left">
+                    <img src="../image/home/nav/shape_zhengce.png" style="width: 16px; height: 16px;">
+                </div>
+                <div class="media-body">
+                    <p>三月水质监测培训活动</p>
+                    <p class="media-footing">
+                      根据上级要求，三月水质监测培训活动。
+                    </p>
+                    <p class="media-footing">
+                      类型: <span class="text-blue">会议通知</span><span class="pull-right">2019-01-23 19:09:23</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/listview.js"></script>
+<script type="text/javascript">
+var lstMedia = LDListView('#mediaList', '.media', function(index) {
+    api.openWin({
+        name: 'note_detail',
+        url: 'note_detail.html',
+        pageParam: {
+            name: 'value'
+        }
+    });
+});
+
+var searchBar = null;
+apiready = function() {
+    var UISearchBar = api.require('UISearchBar');
+    searchBar = new LDSearchBar(UISearchBar, '输入关键字名称查询', function(ret) {
+        alert(JSON.stringify(ret));
+    });
+};
+
+function openSearchWindow() {
+    searchBar.open();
+}
+</script>
+
+</html>

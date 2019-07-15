@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <script src="script/flexible.js"></script>
+  <script src="script/fastclick.js"></script>
+  <script src="script/app.global.js"></script>
+  <!--[if IE]><link rel="icon" href="favicon.ico"><![endif]-->
+  <style>#preloadingAnimation{position:fixed;left:0;top:0;height:100%;width:100%;background:#ffffff;user-select:none;z-index: 9999;overflow: hidden}.lds-roller{display:inline-block;position:relative;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;}.lds-roller div{animation:lds-roller 1.2s cubic-bezier(0.5,0,0.5,1) infinite;transform-origin:32px 32px;}.lds-roller div:after{content:" ";display:block;position:absolute;width:6px;height:6px;border-radius:50%;background:#1875F0;margin:-3px 0 0 -3px;}.lds-roller div:nth-child(1){animation-delay:-0.036s;}.lds-roller div:nth-child(1):after{top:50px;left:50px;}.lds-roller div:nth-child(2){animation-delay:-0.072s;}.lds-roller div:nth-child(2):after{top:54px;left:45px;}.lds-roller div:nth-child(3){animation-delay:-0.108s;}.lds-roller div:nth-child(3):after{top:57px;left:39px;}.lds-roller div:nth-child(4){animation-delay:-0.144s;}.lds-roller div:nth-child(4):after{top:58px;left:32px;}.lds-roller div:nth-child(5){animation-delay:-0.18s;}.lds-roller div:nth-child(5):after{top:57px;left:25px;}.lds-roller div:nth-child(6){animation-delay:-0.216s;}.lds-roller div:nth-child(6):after{top:54px;left:19px;}.lds-roller div:nth-child(7){animation-delay:-0.252s;}.lds-roller div:nth-child(7):after{top:50px;left:14px;}.lds-roller div:nth-child(8){animation-delay:-0.288s;}.lds-roller div:nth-child(8):after{top:45px;left:10px;}#preloadingAnimation .load-tips{color: #1875F0;font-size:1rem;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin-top:80px;text-align:center;width:400px;height:64px;}  @keyframes lds-roller{0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);}}</style>
+  <title>WJ-SPA-APPFrame</title>
+<link href="0.js" rel="prefetch"><link href="1.js" rel="prefetch"><link href="10.js" rel="prefetch"><link href="11.js" rel="prefetch"><link href="12.js" rel="prefetch"><link href="13.js" rel="prefetch"><link href="14.js" rel="prefetch"><link href="15.js" rel="prefetch"><link href="16.js" rel="prefetch"><link href="17.js" rel="prefetch"><link href="18.js" rel="prefetch"><link href="19.js" rel="prefetch"><link href="2.js" rel="prefetch"><link href="20.js" rel="prefetch"><link href="21.js" rel="prefetch"><link href="22.js" rel="prefetch"><link href="23.js" rel="prefetch"><link href="24.js" rel="prefetch"><link href="25.js" rel="prefetch"><link href="26.js" rel="prefetch"><link href="27.js" rel="prefetch"><link href="28.js" rel="prefetch"><link href="29.js" rel="prefetch"><link href="3.js" rel="prefetch"><link href="30.js" rel="prefetch"><link href="31.js" rel="prefetch"><link href="32.js" rel="prefetch"><link href="33.js" rel="prefetch"><link href="34.js" rel="prefetch"><link href="35.js" rel="prefetch"><link href="36.js" rel="prefetch"><link href="37.js" rel="prefetch"><link href="38.js" rel="prefetch"><link href="39.js" rel="prefetch"><link href="4.js" rel="prefetch"><link href="40.js" rel="prefetch"><link href="41.js" rel="prefetch"><link href="42.js" rel="prefetch"><link href="43.js" rel="prefetch"><link href="44.js" rel="prefetch"><link href="45.js" rel="prefetch"><link href="46.js" rel="prefetch"><link href="5.js" rel="prefetch"><link href="6.js" rel="prefetch"><link href="7.js" rel="prefetch"><link href="8.js" rel="prefetch"><link href="9.js" rel="prefetch"><link href="fail.js" rel="prefetch"><link href="login.js" rel="prefetch"><link href="index.js" rel="preload" as="script"><link href="public/css/index.aa065179.css" rel="preload" as="style"><link href="public/css/index.aa065179.css" rel="stylesheet"><link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#4DBA87"><meta name="apple-mobile-web-app-capable" content="no"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="wj-spa-appframe"><link rel="apple-touch-icon" href="img/icons/apple-touch-icon-152x152.png"><link rel="mask-icon" href="img/icons/safari-pinned-tab.svg" color="#4DBA87"><meta name="msapplication-TileImage" content="img/icons/msapplication-icon-144x144.png"><meta name="msapplication-TileColor" content="#000000"></head>
+
+<body>
+  <noscript>
+    <strong>对不起您的浏览器关闭了javascript支持，请打开后再重试!</strong>
+  </noscript>
+  <div id="app">
+    <div id="preloadingAnimation"><div class=lds-roller><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class=load-tips>Loading</div></div>
+  </div>
+  <script>
+    // fastClick 解决移动端300ms问题
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function () {
+        FastClick.attach(document.body);
+      }, false);
+      // 解决fastclick  input获取焦点Bug
+      FastClick.prototype.onTouchEnd = function (event) {
+        if (event.target.hasAttribute("type") && event.target.getAttribute("type") == "date") {
+          return false;
+        }
+      }
+    }
+
+    window.onload = function () {
+      // safari阻止双击放大
+      var lastTouchEnd = 0;
+      document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      });
+      document.addEventListener('touchend', function (event) {
+        var now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+      // safari 阻止双指
+      document.addEventListener('gesturestart', function (event) {
+        event.preventDefault();
+      });
+    }
+  </script>
+<script type="text/javascript" src="index.js"></script></body>
+
+</html>

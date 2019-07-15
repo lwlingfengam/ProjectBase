@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>company detail frame</title>
+    <!--  排污企业详情 -->
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body class="flex-box-v">
+    <div id="search" tapmode onclick="openSearchWindow();">
+        <div class="search-warp">
+            <input type="text" placeholder="输入关键字名称查询" readonly="readonly">
+        </div>
+    </div>
+
+<div id="main" class="flex-1">
+    <div id="mediaList" class="media-warp">
+    <div class="media" tapmode="active" onclick="openFile('../files/Logs_20181129.txt');">
+            <div class="media-left">
+                <img src="../image/txt.png" style="width: 44px; height: 44px;">
+            </div>
+            <div class="media-body">
+                <div class="media-heading">企业诚信审核.txt
+                  <span class="label label-info pull-right">企业诚信</span>
+                </div>
+                <div class="media-footing">
+                    <span class="file-size">2019-01-23 19:09:23</span>
+                    <span class="pull-right">上传者 : 李明明</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="media" tapmode="active" onclick="openFile('../files/Logs_20181129.txt');">
+        <div class="media-left">
+            <img src="../image/txt.png" style="width: 44px; height: 44px;">
+        </div>
+        <div class="media-body">
+            <div class="media-heading">企业诚信审核.txt
+              <span class="label label-info pull-right">企业诚信</span>
+            </div>
+            <div class="media-footing">
+                <span class="file-size">2019-01-23 19:09:23</span>
+                <span class="pull-right">上传者 : 李明明</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="media" tapmode="active" onclick="openFile('../files/Logs_20181129.txt');">
+        <div class="media-left">
+            <img src="../image/txt.png" style="width: 44px; height: 44px;">
+        </div>
+        <div class="media-body">
+            <div class="media-heading">企业诚信审核.txt
+              <span class="label label-info pull-right">企业诚信</span>
+            </div>
+            <div class="media-footing">
+                <span class="file-size">2019-01-23 19:09:23</span>
+                <span class="pull-right">上传者 : 李明明</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/onlinefile.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+
+<script type="text/javascript">
+var searchBar = null,
+    onlineFile = null,
+    $container = document.querySelector('#mediaList');
+
+/*apiready = function() {
+    var UISearchBar = api.require('UISearchBar');
+    searchBar = new LDSearchBar(UISearchBar, '输入关键字名称查找', function(ret) {
+        loadData(ret.text);
+    });
+
+    onlineFile = new app.OnlineFile();
+
+    app.setRefreshHeaderInfo(loadData);
+    loadData();
+};*/
+
+function openFile(url) {
+    onlineFile.open(url);
+}
+
+function openSearchWindow() {
+    searchBar.open();
+}
+</script>
+
+</html>

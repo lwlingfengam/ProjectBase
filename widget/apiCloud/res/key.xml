@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security>
+   <item name="tencentPush_AppId" value="c1c78c23fafe4" />
+   <item name="tencentPush_SecretKey" value="9fe4d1e518df1470e0dadeea09bb8b0e" />
+</security>

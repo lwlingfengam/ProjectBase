@@ -1,0 +1,81 @@
+ <widget id="A6016902034769"  version="1.0.0">
+
+    <name>WJSPAAPPFrame</name>
+
+    <description>
+
+        万江APP框架-SPA版本
+
+    </description>
+
+    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+
+        Developer
+
+    </author>
+
+    <content src="index.html" />
+
+    <access origin="*" />
+
+    <preference name="pageBounce" value="false"/>
+
+	<!-- window.navigation.userAgent追加标识,识别环境。 -->
+	<preference name="userAgent" value="APICloud" />
+
+	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="hScrollBarEnabled" value="false"/>
+
+	<preference name="vScrollBarEnabled" value="false"/>
+
+	<preference name="autoLaunch" value="true"/>
+
+	<preference name="fullScreen" value="false"/>
+
+	<preference name="autoUpdate" value="true" />
+
+	<preference name="smartUpdate" value="false" />
+
+	<preference name="debug" value="true"/>
+
+	<preference name="statusBarAppearance" value="true"/>
+
+	<permission name="readPhoneState" />
+
+	<permission name="camera" />
+
+	<permission name="record" />
+
+	<permission name="location" />
+
+	<permission name="fileSystem" />
+
+	<permission name="internet" />
+
+	<permission name="bootCompleted" />
+
+	<permission name="hardware" />
+   <meta-data
+     name="com.baidu.lbsapi.API_KEY"
+     value="RLScRN4rl92Gd1dTn5ahMfxWvTiO1GKR" />
+
+	<feature name="tencentPush">
+    <param name="android_accessId" value="2100332816" />
+    <param name="android_accessKey" value="A9B97HURX56M" />
+  </feature>
+	<feature name="bmLocation">
+    <param name="android_api_key" value="RLScRN4rl92Gd1dTn5ahMfxWvTiO1GKR"></param>
+    <param name="ios_api_key" value="请配置iOS key" ></param>
+  </feature>
+  <feature name="aMap">
+    <param name="android_api_key" value="24ad5fb68f9e406f55f5a8a23aaf6cb5" />
+    <param name="ios_api_key" value="请配置iOS key" />
+  </feature>
+
+    
+</widget>

@@ -1,0 +1,311 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style type="text/css">
+        .aui-list .aui-list-item-media {
+            width: 3rem;
+        }
+        .notes-add {
+            position: fixed;
+            left: 0.5rem;
+            bottom: 0.5rem;
+            width: 3rem;
+            z-index: 99;
+        }
+        textarea {
+            height: 8rem;
+            background-color: #ffffff;
+            padding: 0.5rem;
+        }
+        .photos img {
+            display: block;
+            width: 100%;
+        }
+        .add-photos > div {
+            width: 100%;
+            height:5.15rem;
+            line-height: 5.15rem;
+        }
+        .add-photos > div .aui-iconfont {
+            font-size: 2rem;
+            color: #ccc;
+        }
+        .image-item {
+            position: relative;
+            height: 5.3rem;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+        .image-item img {
+            display: block;
+            margin: 0 auto;
+            width: auto;
+            height: 100%;
+        }
+        .image-item .delete-btn {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 28px;
+            height: 28px;
+            background-color: rgba(0,0,0,0.7);
+            margin-left: -14px;
+            margin-top: -14px;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <p class="aui-text-center aui-margin-t-15">普通问题上报</p>
+    <section class="aui-content-padded">
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        上报人：
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="管理员" disabled="disabled">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        巡检对象
+                    </div>
+                    <div class="aui-list-item-input">
+                        <select>
+                            <option>宜宾白沙污水厂</option>
+                            <option>宜宾南岸污水处理厂</option>
+                            <option>宜宾杨湾污水处理厂</option>
+                            <option>宜宾象鼻污水处理厂</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        地址：
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="成都市武侯区益州大道 环球中心" disabled="disabled">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系电话
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="number" placeholder="请填写联系电话">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        问题级别
+                    </div>
+                    <div class="aui-list-item-input">
+                        <label><input class="aui-radio" type="radio" name="demo1" checked> 普通</label>
+                        <label><input class="aui-radio" type="radio" name="demo1"> 紧急</label>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        问题类型
+                    </div>
+                    <div class="aui-list-item-input">
+                        <select>
+                            <option>水质问题</option>
+                            <option>设备问题</option>
+                            <option>管道问题</option>
+                            <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        问题详情
+                    </div>
+                    <div class="aui-list-item-input">
+                        <textarea placeholder="请输入问题详情..."></textarea>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section class="aui-content-padded">
+        <div class="aui-row aui-row-padded">
+          <!-- <div class="aui-col-xs-4 image-item" onclick="UIAlbumBrowser_imagePicker()">
+              <input type="hidden" >
+              <img src="../image/demo1.png" class="notes-image">
+              <div class="delete-btn">
+                  <i class="aui-iconfont aui-icon-trash"></i>
+              </div>
+          </div> -->
+            <div class="aui-col-xs-4 add-photos" onclick="UIAlbumBrowser_imagePicker()">
+                <div class="aui-border aui-text-center">
+                    <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+            </div>
+        </div>
+        <div id='bd' style="height: 80px; width: 80px;" class="imgcontainter">
+    <!-- <img src="../image/00123 (1).jpg" alt="">
+    <img src="../image/00123 (2).jpg" alt="">
+    <img src="../image/00123 (3).jpg" alt="">
+    <img src="../image/00123 (4).jpg" alt=""> -->
+</div>
+    </section>
+
+    <footer class="aui-bar aui-bar-tab" id="footer">
+    <div class="aui-bar-tab-item aui-padded-l-15 aui-padded-r-15">
+        <div class="aui-btn aui-btn-block aui-btn-sm aui-btn-info" onclick="openGroupFrames();">
+          <i class="aui-iconfont aui-icon-plus aui-font-size-16"></i>提交
+        </div>
+    </div>
+</footer>
+    <!-- <section class="aui-content-padded aui-clearfix">
+        <div class="aui-info">
+            <div class="aui-info-item aui-padded-r-10" style="width: 13rem">
+                <div>
+                    <i class="aui-iconfont aui-icon-location"></i>
+                    <span id="location" class="aui-ellipsis">北京市海淀区</span>
+                </div>
+            </div>
+            <div class="info-item" style="width: 80px;" tapmode>
+                <i class="aui-iconfont aui-icon-refresh aui-text-info aui-margin-r-5"></i>
+                <span class="aui-text-info">重新定位</span>
+            </div>
+        </div>
+    </section> -->
+
+</body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    var UIAlbumBrowser;
+    var i = 0;
+    var imgarr = [];
+    apiready = function() {
+        UIAlbumBrowser = api.require('UIAlbumBrowser');
+    };
+
+    //打开图片选择器
+    function UIAlbumBrowser_imagePicker() {
+        UIAlbumBrowser.imagePicker({
+            max: 9,
+            styles: {
+                bg: '#000000',
+                //cameraImg: 'widget://res/cameraImg.png',
+                mark: {
+                    position: 'top_right',
+                    size: 20
+                },
+                nav: {
+                    bg: '#000000',
+                    cancelColor: '#fff',
+                    cancelSize: 16,
+                    nextStepColor: '#7fff00',
+                    nextStepSize: 16
+                },
+                thumbnail: { //（可选项）返回的缩略图配置，**建议本图片不要设置过大** 若已有缩略图，则使用已有的缩略图。若要重新生成缩略图，可先调用清除缓存接口api.clearCache()。
+                    w: 100, //（可选项）数字类型；返回的缩略图的宽；默认：原图的宽度
+                    h: 100 //（可选项）数字类型；返回的缩略图的宽；默认：原图的高度
+                }
+            },
+            animation: true,
+        }, function(ret) {
+            if (ret.eventType == 'nextStep') {
+                if (ret.list && ret.list.length > 0) {
+                    imgarr = ret.list;
+                    UIAlbumBrowser_transPath();
+                }
+                UIAlbumBrowser.closePicker();
+                //alert(JSON.stringify(ret));
+            }
+            if (ret.originalPath && ret.originalPath.length > 0) {
+                document.getElementById('img').src = ret.originalPath;
+            }
+        });
+    }
+
+    function UIAlbumBrowser_open() {
+        UIAlbumBrowser.open({
+            max: 4,
+            type: 'all',
+            isOpenPreview: true,
+            styles: {
+                bg: '#000000',
+                mark: {
+                    position: 'bottom_left',
+                    size: 20
+                },
+                nav: {
+                    bg: '#000000',
+                    titleColor: '#ffffff',
+                    titleSize: 18,
+                    cancelColor: '#00ff00',
+                    cancelSize: 16,
+                    finishColor: '#00ff00',
+                    finishSize: 16
+                }
+            },
+            rotation: false  //无效
+        }, function(ret) {
+            if (ret) {
+                alert(JSON.stringify(ret));
+            }
+        });
+
+    }
+
+    function UIAlbumBrowser_transPath() {
+        UIAlbumBrowser.transPath({
+            path: imgarr[i].path
+        }, function(ret, err) {
+            if (ret) {
+                i++;
+                if (i < imgarr.length) {
+                    UIAlbumBrowser_transPath();
+                } else {
+                    i = 0;
+                }
+                var img = document.createElement('img');
+                img.src = ret.path;
+                document.getElementById('bd').appendChild(img);
+                console.log("ret.path:" + ret.path);
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+    }
+    function openGroupFrames() {
+        api.openWin({
+            name: 'eventup_success',
+            url: 'eventup_success.html',
+            // pageParam: {
+            //     id: id,
+            //     name: name,
+            //     reportDate: reportDate,
+            //     deviceId: deviceId,
+            //     projectId: projectId
+            // }
+        });
+    }
+</script>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>event detail frame</title>
+    <!--  巡检上报问题详情 -->
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+
+<div id="main" class="flex-1">
+  <div class="list-block">
+      <div class="list-block-main">
+        <div class="row">
+          <div class="flex-1 text-left datetime">上报人员:</div>
+          <div class="flex-1 text-right  ">管理员</div>
+        </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题编号:</div>
+            <div class="flex-1 text-right  ">HZZ220181115092440946</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题对象:</div>
+            <div class="flex-1 text-right  ">宜宾南岸污水处理厂</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题类型:</div>
+            <div class="flex-1 text-right  ">检查上报</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">问题级别:</div>
+            <div class="flex-1 text-right  ">普通</div>
+          </div>
+          <div class="row">
+            <div class="flex-1 text-left datetime">创建时间:</div>
+            <div class="flex-1 text-right  ">2019.4.3 12:34:43</div>
+          </div>
+        <div class="line-dotted"></div>
+<!-- 带有流转 -->
+        <span style="color: #333" class="title"><strong>流转过程</strong></span>
+          <div class="row">
+            <div class="flex-1 text-left datetime">暂无</div>
+          </div>
+          <!-- <div class="line-dotted"></div>
+          <span style="color: #333" class="title"><strong>检查项目: 水质,</strong> 共上报 1 项异常，其中：普通级别 1 项. </span> -->
+          <!-- <div class="list-block-main">
+            <div class="row">
+              <div class="flex-1 text-left datetime">问题编号:</div>
+              <div class="flex-1 text-right  ">1905051714079612274</div>
+            </div>
+              <div class="row">
+                <div class="flex-1 text-left datetime">问题级别:</div>
+                <div class="flex-1 text-right  ">普通</div>
+              </div>
+              <div class="row">
+                <div class="flex-1 text-left datetime">问题描述:</div>
+              </div>
+              <div class="row">
+                <div style="margin : 10px 0px 15px 15px;" class="flex-1 text-left ">进水水质报警,字数显示为300字,予以换行显示<br>字数显示为300字,予以换行显示</div>
+              </div>
+              <div class="row">
+                <div class="flex-1 text-left datetime">创建时间:</div>
+                <div class="flex-1 text-right  ">2019.5.3 12:34:43</div>
+              </div>
+              <div class="row">
+                <div class="flex-1 text-left datetime">处理状态:</div>
+                <div class="flex-1 text-right  ">未解决</div>
+              </div>
+              <div class="row">
+                <div class="flex-1 text-left datetime">问题画面:</div>
+              </div>
+              <div class="row">
+                <div class="flex-1 text-left eventimgdiv">
+                <img class="eventimgthumb" src="../image/001234.jpg" alt="">
+                <img class="eventimgthumb" src="../image/001233.jpg" alt="">
+                <img class="eventimgthumb" src="../image/001232.jpg" alt="">
+                <img class="eventimgthumb" src="../image/001231.jpg" alt="">
+                </div>
+              </div>
+          </div> -->
+        </div>
+
+          <footer class="aui-bar aui-bar-tab">
+            <div class="aui-bar-tab-item" tapmode style="width: 5rem;" onclick="openDialogText();">
+                <i class="aui-iconfont aui-icon-comment aui-text-info"></i>
+                <div class="aui-bar-tab-label aui-text-info">添加说明</div>
+            </div>
+            <div class="aui-bar-tab-item aui-bg-warning aui-text-white" tapmode style="width: auto;" onclick="openTransferFrames();">任务派发</div>
+            <div class="aui-bar-tab-item aui-bg-danger aui-text-white" tapmode style="width: auto;" onclick="openDialogOver();">结束任务</div>
+        </footer>
+      </div>
+  </div>
+</div>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/searchbar.js"></script>
+<script type="text/javascript" src="../script/onlinefile.js"></script>
+<script type="text/javascript" src="../script/underscore-min.js"></script>
+<script type="text/javascript" src="../script/templates.js"></script>
+<script type="text/javascript" src="../script/dialog.js" ></script>
+<script type="text/javascript">
+var searchBar = null,
+    onlineFile = null,
+    $container = document.querySelector('#mediaList');
+    var dialog = new auiDialog();
+
+function openDialogText() {
+  dialog.prompt({
+          title:"请输入说明内容",
+          text:'说明内容',
+          type:'text',
+          buttons:['取消','确定']
+        },function(ret){
+    console.log(ret)
+});
+}
+
+function openDialogOver() {
+  dialog.prompt({
+          title:"您将结束该任务,请填写结束说明",
+          text:'结束说明',
+          type:'text',
+      },function(ret){
+          if(ret){
+              dialog.alert({
+                  title:"提示",
+                  msg:"您已结束本次任务",
+                  buttons:['确定']
+              });
+          }
+      });
+}
+
+function openTransferFrames() {
+api.openWin({
+    name: 'event_transfer_pick',
+    url: 'event_transfer_pick.html',
+
+});
+}
+</script>
+
+</html>
