@@ -68,12 +68,8 @@
     <param name="android_accessId" value="2100332816" />
     <param name="android_accessKey" value="A9B97HURX56M" />
   </feature>
-	<feature name="bmLocation">
-    <param name="android_api_key" value="RLScRN4rl92Gd1dTn5ahMfxWvTiO1GKR"></param>
-    <param name="ios_api_key" value="请配置iOS key" ></param>
-  </feature>
   <feature name="bMap">
-    <param name="android_api_key" value="D3DfmER9Mq7SS71vt4Z9cFAZwlVXaqn2" />
+    <param name="android_api_key" value="eoNjxfnLE6QMkWejNBz3nT5DG3PjueZG" />
     <param name="ios_api_key" value="" />
   </feature>
 
